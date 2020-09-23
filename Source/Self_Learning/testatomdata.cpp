@@ -3,8 +3,12 @@
 
 #include "testatomdata.h"
 #include <bits/stdc++.h>
+#include "Misc/FileHelper.h"
 
 using namespace std;
+
+FString test(int num);
+
 
 // Sets default values
 Atestatomdata::Atestatomdata()
@@ -17,6 +21,7 @@ Atestatomdata::Atestatomdata()
 // Called when the game starts or when spawned
 void Atestatomdata::BeginPlay()
 {
+	test(1);
 	Super::BeginPlay();
 	
 }
@@ -28,15 +33,15 @@ void Atestatomdata::Tick(float DeltaTime)
 
 }
 
-string test(int num)
+FString test(int num)
 {
-	string result;
+	FString result;
 
-	FString path = "PeriodicTable.json";
+	FString path = "C:/Users/Sean/source/repos/Self_Learning/Source/Self_Learning/PeriodicTable";
 	FString content = "";
 	TSharedPtr<FJsonObject> JsonObject;
 	
-	FFileHelper::LoadFileToString(content, path);
+	FFileHelper::LoadFileToString(content, *path);
 
 	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(content);
 
@@ -50,22 +55,15 @@ string test(int num)
 		TSharedPtr<FJsonValue> atom = objArray[num-1];
 		TSharedPtr<FJsonObject> json = atom->AsObject();
 
-		result = json->GetStringField("symbol")
-
-
+		result = json->GetStringField("symbol");
+		int32 tmp = json->GetNumberField("molar_heat");
 		
 		//display
-		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromString(result));
-
-
-
-
-
-
-
-
-		//GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, FString::FromInt(recievedInt));
+		//GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromString(result));
+		GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, FString::FromInt(tmp));
 	}
+
+	return result;
 
 }
 
