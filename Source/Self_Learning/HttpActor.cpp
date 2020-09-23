@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Self_Learning.h"
 #include "HttpActor.h"
+#include "Self_Learning.h"
+
 
 // Sets default values
 AHttpActor::AHttpActor()
@@ -47,18 +48,17 @@ void AHttpActor::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Re
 
 		int32 cid = 0;
 
-		if (objArray.Num())
-		{
-			TSharedPtr<FJsonValue> value = objArray[0];
-			TSharedPtr<FJsonObject> json = value->AsObject();
+		
+		TSharedPtr<FJsonValue> value = objArray[0];
+		TSharedPtr<FJsonObject> json = value->AsObject();
 
-			TSharedPtr<FJsonObject> id1 = json->GetObjectField("id");
-			TSharedPtr<FJsonObject> id2 = id1->GetObjectField("id");
-			cid = id2->GetNumberField("cid");
+		TSharedPtr<FJsonObject> id1 = json->GetObjectField("id");
+		TSharedPtr<FJsonObject> id2 = id1->GetObjectField("id");
+		cid = id2->GetNumberField("cid");
 
-			//display
-			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromInt(cid));
-		}
+		//display
+		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromInt(cid));
+		
 
 		
 
