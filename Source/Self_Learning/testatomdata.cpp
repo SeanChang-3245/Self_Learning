@@ -28,8 +28,10 @@ void Atestatomdata::Tick(float DeltaTime)
 
 }
 
-void test()
+string test(int num)
 {
+	string result;
+
 	FString path = "PeriodicTable.json";
 	FString content = "";
 	TSharedPtr<FJsonObject> JsonObject;
@@ -42,20 +44,18 @@ void test()
 	if (FJsonSerializer::Deserialize(Reader, JsonObject))
 	{
 		//Get the value of the json object by field name
-		TArray<TSharedPtr<FJsonValue>> objArray = JsonObject->GetArrayField("PC_Compounds");
-
-		int32 cid = 0;
+		TArray<TSharedPtr<FJsonValue>> objArray = JsonObject->GetArrayField("elements");
 
 
-		TSharedPtr<FJsonValue> value = objArray[0];
-		TSharedPtr<FJsonObject> json = value->AsObject();
+		TSharedPtr<FJsonValue> atom = objArray[num-1];
+		TSharedPtr<FJsonObject> json = atom->AsObject();
 
-		TSharedPtr<FJsonObject> id1 = json->GetObjectField("id");
-		TSharedPtr<FJsonObject> id2 = id1->GetObjectField("id");
-		cid = id2->GetNumberField("cid");
+		result = json->GetStringField("symbol")
 
+
+		
 		//display
-		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromInt(cid));
+		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromString(result));
 
 
 
