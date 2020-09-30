@@ -3,6 +3,9 @@
 #include "HttpActor.h"
 #include "Self_Learning.h"
 
+class molecular;
+
+
 
 // Sets default values
 AHttpActor::AHttpActor()
@@ -24,7 +27,7 @@ void AHttpActor::MyHttpCall()
 	TSharedRef<IHttpRequest> Request = Http->CreateRequest();
 	Request->OnProcessRequestComplete().BindUObject(this, &AHttpActor::OnResponseReceived);
 	//This is the url on which to process the request
-	Request->SetURL("https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/CID/98765/record/JSON/?record_type=3d&response_type=display");
+	Request->SetURL("https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/CID/280/record/JSON/?record_type=3d&response_type=display");
 	Request->SetVerb("GET");
 	Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
 	Request->SetHeader("Content-Type", TEXT("application/json"));
@@ -43,29 +46,46 @@ void AHttpActor::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Re
 	//Deserialize the json data given Reader and the actual object to deserialize
 	if (FJsonSerializer::Deserialize(Reader, JsonObject))
 	{
+		molecular mole;
+
 		//Get the value of the json object by field name
 		TArray<TSharedPtr<FJsonValue>> objArray = JsonObject->GetArrayField("PC_Compounds");
 
+		
 		int32 cid = 0;
 
 		
+
+
 		TSharedPtr<FJsonValue> value = objArray[0];
 		TSharedPtr<FJsonObject> json = value->AsObject();
 
-		TSharedPtr<FJsonObject> id1 = json->GetObjectField("id");
-		TSharedPtr<FJsonObject> id2 = id1->GetObjectField("id");
-		cid = id2->GetNumberField("cid");
+
+
+		TSharedPtr<FJsonObject> atoms = json->GetObjectField("atoms");
+
 
 		//display
-		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromInt(cid));
+		//GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromInt(cid));
 		
-
-		
-
-
-		
-
-
 		//GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, FString::FromInt(recievedInt));
 	}
 }
+
+
+
+
+struct coordinate
+{
+	int x;
+	int y;
+	int z;
+};
+
+class molecular
+{
+public:
+	int AtomNumber;
+	
+
+};

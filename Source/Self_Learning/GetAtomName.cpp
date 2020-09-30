@@ -1,39 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "testatomdata.h"
-#include <bits/stdc++.h>
+#include "GetAtomName.h"
 #include "Misc/FileHelper.h"
+#include <bits/stdc++.h>
 
 using namespace std;
 
-FString test(int num);
-
-
 // Sets default values
-Atestatomdata::Atestatomdata()
-{
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 
-}
 
-// Called when the game starts or when spawned
-void Atestatomdata::BeginPlay()
-{
-	test(10);
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void Atestatomdata::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-FString test(int num)
+FString GetAtomNameString(int num)
 {
 	//GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, TEXT("test enter func test\n"));
 
@@ -45,7 +22,7 @@ FString test(int num)
 	TSharedPtr<FJsonObject> JsonObject;
 
 	FFileHelper::LoadFileToString(content, *path);
-	
+
 
 	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(content);
 
@@ -56,12 +33,12 @@ FString test(int num)
 		TArray<TSharedPtr<FJsonValue>> objArray = JsonObject->GetArrayField("elements");
 
 
-		TSharedPtr<FJsonValue> atom = objArray[num-1];
+		TSharedPtr<FJsonValue> atom = objArray[num - 1];
 		TSharedPtr<FJsonObject> json = atom->AsObject();
 
 		result = json->GetStringField("symbol");
 		int32 tmp = json->GetNumberField("molar_heat");
-		
+
 		//display
 		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FString(result));
 		//GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, FString::FromInt(tmp));
@@ -71,5 +48,37 @@ FString test(int num)
 	return result;
 
 }
+
+
+
+
+
+AGetAtomName::AGetAtomName()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+}
+
+// Called when the game starts or when spawned
+void AGetAtomName::BeginPlay()
+{
+	FString k = GetAtomNameString(90);
+	
+	//GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FString(k));
+	
+	Super::BeginPlay();
+}
+
+// Called every frame
+void AGetAtomName::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
+
+
+
 
 
