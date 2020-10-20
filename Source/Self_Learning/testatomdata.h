@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "testatomdata.generated.h"
 
+
 UCLASS()
 class SELF_LEARNING_API Atestatomdata : public AActor
 {
