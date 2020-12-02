@@ -2,6 +2,8 @@
 
 #include "HttpActor.h"
 #include "Self_Learning.h"
+#include <iostream>
+#include <vector>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -17,16 +19,16 @@ struct coordinate
 
 struct bonds
 {
-	int aid_1;
-	int aid_2;
-	int order;
+	int32 aid_1;
+	int32 aid_2;
+	int32 order;
 
 };
 
 class conformer_create
 {
 public:
-	vector<int> ele_id;
+	vector<int32> ele_id;
 	vector<coordinate> pos;
 	vector<bonds> ele_bond;
 };
@@ -93,7 +95,7 @@ void AHttpActor::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Re
 			TSharedPtr<FJsonValue> value = objArray[0];
 			TSharedPtr<FJsonObject> json = value->AsObject();
 
-
+			
 
 			TArray<TSharedPtr<FJsonValue>> ele_num = json->GetArrayField("element"); //­ì¤l§Ç
 			for (int i = 0; i < ele_num.Num(); ++i)
@@ -135,15 +137,18 @@ void AHttpActor::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Re
 				con.pos.push_back(tmp);
 			}
 
+			//------- get data ok -------
 
 			//display
 			//GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromInt(cid));
 			//GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, TEXT("got data2\n"));
-			if(con.ele_id[0])
-				GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromInt(cid));
+			
+			//if(con.ele_id[0])
+			GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Green, FString::FromInt(con.ele_bond[0].aid_1));   //ok
+			
 			//GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, FString::FromInt(recievedInt));
 			//UE_LOG(LogTemp, Warning, TEXT("Text, %lf"), con.pos[2].z);
-			//GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, TEXT("got data %d \n"), (int)con.pos[2].z);
+			GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, FString::Printf(TEXT("got data %lf \n"), con.pos[0].x));   //ok
 
 
 		}
