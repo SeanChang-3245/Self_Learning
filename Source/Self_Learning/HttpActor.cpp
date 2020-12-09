@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <bits/stdc++.h>
+#include "AtomDataForCreating.h"
 
 using namespace std;
 
@@ -34,7 +35,7 @@ public:
 };
 
 
-
+conformer_create con;
 
 // Sets default values
 AHttpActor::AHttpActor()
@@ -80,7 +81,7 @@ void AHttpActor::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Re
 		if (fault == nullptr)
 		{
 			//GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, TEXT("got data1\n"));
-			conformer_create con;
+			
 
 
 			//Get the value of the json object by field name
